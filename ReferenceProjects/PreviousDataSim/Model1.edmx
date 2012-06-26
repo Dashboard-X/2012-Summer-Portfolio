@@ -1,0 +1,439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="baxtech_clinicModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="baxtech_clinicModelStoreContainer">
+          <EntitySet Name="Bed" EntityType="baxtech_clinicModel.Store.Bed" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BedType" EntityType="baxtech_clinicModel.Store.BedType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Doctor" EntityType="baxtech_clinicModel.Store.Doctor" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Patient" EntityType="baxtech_clinicModel.Store.Patient" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Visit" EntityType="baxtech_clinicModel.Store.Visit" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="VisitDetails" EntityType="baxtech_clinicModel.Store.VisitDetails" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Bed_BedType" Association="baxtech_clinicModel.Store.FK_Bed_BedType">
+            <End Role="BedType" EntitySet="BedType" />
+            <End Role="Bed" EntitySet="Bed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_Bed" Association="baxtech_clinicModel.Store.FK_Visit_Bed">
+            <End Role="Bed" EntitySet="Bed" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_Doctor" Association="baxtech_clinicModel.Store.FK_Visit_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_Patient" Association="baxtech_clinicModel.Store.FK_Visit_Patient">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_VisitDetails" Association="baxtech_clinicModel.Store.FK_Visit_VisitDetails">
+            <End Role="VisitDetails" EntitySet="VisitDetails" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Bed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BedName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="RatePerDay" Type="money" Nullable="false" />
+          <Property Name="BedTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BedType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Address" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="Phone" Type="varchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Address" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="Phone" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="EmergencyContact" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="DateOfRegistration" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="DateOfVisit" Type="datetime" Nullable="false" />
+          <Property Name="BedId" Type="int" />
+          <Property Name="DateOfDischarge" Type="datetime" />
+          <Property Name="DetailsId" Type="int" />
+        </EntityType>
+        <EntityType Name="VisitDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Symptoms" Type="varchar" Nullable="false" MaxLength="1000" />
+          <Property Name="Disease" Type="varchar" Nullable="false" MaxLength="1000" />
+          <Property Name="Treatment" Type="varchar" Nullable="false" MaxLength="1000" />
+        </EntityType>
+        <Association Name="FK_Bed_BedType">
+          <End Role="BedType" Type="baxtech_clinicModel.Store.BedType" Multiplicity="1" />
+          <End Role="Bed" Type="baxtech_clinicModel.Store.Bed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BedType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bed">
+              <PropertyRef Name="BedTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_Bed">
+          <End Role="Bed" Type="baxtech_clinicModel.Store.Bed" Multiplicity="0..1" />
+          <End Role="Visit" Type="baxtech_clinicModel.Store.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bed">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="BedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_Doctor">
+          <End Role="Doctor" Type="baxtech_clinicModel.Store.Doctor" Multiplicity="1" />
+          <End Role="Visit" Type="baxtech_clinicModel.Store.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_Patient">
+          <End Role="Patient" Type="baxtech_clinicModel.Store.Patient" Multiplicity="1" />
+          <End Role="Visit" Type="baxtech_clinicModel.Store.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_VisitDetails">
+          <End Role="VisitDetails" Type="baxtech_clinicModel.Store.VisitDetails" Multiplicity="0..1" />
+          <End Role="Visit" Type="baxtech_clinicModel.Store.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="DetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="baxtech_clinicModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="baxtech_clinicEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Beds" EntityType="baxtech_clinicModel.Bed" />
+          <EntitySet Name="BedTypes" EntityType="baxtech_clinicModel.BedType" />
+          <EntitySet Name="Doctors" EntityType="baxtech_clinicModel.Doctor" />
+          <EntitySet Name="Patients" EntityType="baxtech_clinicModel.Patient" />
+          <EntitySet Name="Visits" EntityType="baxtech_clinicModel.Visit" />
+          <EntitySet Name="VisitDetails" EntityType="baxtech_clinicModel.VisitDetail" />
+          <AssociationSet Name="FK_Bed_BedType" Association="baxtech_clinicModel.FK_Bed_BedType">
+            <End Role="BedType" EntitySet="BedTypes" />
+            <End Role="Bed" EntitySet="Beds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_Bed" Association="baxtech_clinicModel.FK_Visit_Bed">
+            <End Role="Bed" EntitySet="Beds" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_Doctor" Association="baxtech_clinicModel.FK_Visit_Doctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_Patient" Association="baxtech_clinicModel.FK_Visit_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_VisitDetails" Association="baxtech_clinicModel.FK_Visit_VisitDetails">
+            <End Role="VisitDetail" EntitySet="VisitDetails" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Bed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="BedName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="RatePerDay" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="BedTypeId" Nullable="false" />
+          <NavigationProperty Name="BedType" Relationship="baxtech_clinicModel.FK_Bed_BedType" FromRole="Bed" ToRole="BedType" />
+          <NavigationProperty Name="Visits" Relationship="baxtech_clinicModel.FK_Visit_Bed" FromRole="Bed" ToRole="Visit" />
+        </EntityType>
+        <EntityType Name="BedType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Beds" Relationship="baxtech_clinicModel.FK_Bed_BedType" FromRole="BedType" ToRole="Bed" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Phone" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Visits" Relationship="baxtech_clinicModel.FK_Visit_Doctor" FromRole="Doctor" ToRole="Visit" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DateOfBirth" Nullable="false" />
+          <Property Type="String" Name="Phone" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EmergencyContact" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DateOfRegistration" Nullable="false" />
+          <NavigationProperty Name="Visits" Relationship="baxtech_clinicModel.FK_Visit_Patient" FromRole="Patient" ToRole="Visit" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DoctorId" Nullable="false" />
+          <Property Type="Int32" Name="PatientId" Nullable="false" />
+          <Property Type="DateTime" Name="DateOfVisit" Nullable="false" />
+          <Property Type="Int32" Name="BedId" />
+          <Property Type="DateTime" Name="DateOfDischarge" />
+          <Property Type="Int32" Name="DetailsId" />
+          <NavigationProperty Name="Bed" Relationship="baxtech_clinicModel.FK_Visit_Bed" FromRole="Visit" ToRole="Bed" />
+          <NavigationProperty Name="Doctor" Relationship="baxtech_clinicModel.FK_Visit_Doctor" FromRole="Visit" ToRole="Doctor" />
+          <NavigationProperty Name="Patient" Relationship="baxtech_clinicModel.FK_Visit_Patient" FromRole="Visit" ToRole="Patient" />
+          <NavigationProperty Name="VisitDetail" Relationship="baxtech_clinicModel.FK_Visit_VisitDetails" FromRole="Visit" ToRole="VisitDetail" />
+        </EntityType>
+        <EntityType Name="VisitDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Symptoms" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Disease" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Treatment" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Visits" Relationship="baxtech_clinicModel.FK_Visit_VisitDetails" FromRole="VisitDetail" ToRole="Visit" />
+        </EntityType>
+        <Association Name="FK_Bed_BedType">
+          <End Type="baxtech_clinicModel.BedType" Role="BedType" Multiplicity="1" />
+          <End Type="baxtech_clinicModel.Bed" Role="Bed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BedType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bed">
+              <PropertyRef Name="BedTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_Bed">
+          <End Type="baxtech_clinicModel.Bed" Role="Bed" Multiplicity="0..1" />
+          <End Type="baxtech_clinicModel.Visit" Role="Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bed">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="BedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_Doctor">
+          <End Type="baxtech_clinicModel.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="baxtech_clinicModel.Visit" Role="Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_Patient">
+          <End Type="baxtech_clinicModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="baxtech_clinicModel.Visit" Role="Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visit_VisitDetails">
+          <End Type="baxtech_clinicModel.VisitDetail" Role="VisitDetail" Multiplicity="0..1" />
+          <End Type="baxtech_clinicModel.Visit" Role="Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="DetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="baxtech_clinicModelStoreContainer" CdmEntityContainer="baxtech_clinicEntities">
+          <EntitySetMapping Name="Beds">
+            <EntityTypeMapping TypeName="baxtech_clinicModel.Bed">
+              <MappingFragment StoreEntitySet="Bed">
+                <ScalarProperty Name="BedTypeId" ColumnName="BedTypeId" />
+                <ScalarProperty Name="RatePerDay" ColumnName="RatePerDay" />
+                <ScalarProperty Name="BedName" ColumnName="BedName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BedTypes">
+            <EntityTypeMapping TypeName="baxtech_clinicModel.BedType">
+              <MappingFragment StoreEntitySet="BedType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="baxtech_clinicModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctor">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="baxtech_clinicModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="DateOfRegistration" ColumnName="DateOfRegistration" />
+                <ScalarProperty Name="EmergencyContact" ColumnName="EmergencyContact" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visits">
+            <EntityTypeMapping TypeName="baxtech_clinicModel.Visit">
+              <MappingFragment StoreEntitySet="Visit">
+                <ScalarProperty Name="DetailsId" ColumnName="DetailsId" />
+                <ScalarProperty Name="DateOfDischarge" ColumnName="DateOfDischarge" />
+                <ScalarProperty Name="BedId" ColumnName="BedId" />
+                <ScalarProperty Name="DateOfVisit" ColumnName="DateOfVisit" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitDetails">
+            <EntityTypeMapping TypeName="baxtech_clinicModel.VisitDetail">
+              <MappingFragment StoreEntitySet="VisitDetails">
+                <ScalarProperty Name="Treatment" ColumnName="Treatment" />
+                <ScalarProperty Name="Disease" ColumnName="Disease" />
+                <ScalarProperty Name="Symptoms" ColumnName="Symptoms" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1">
+        <EntityTypeShape EntityType="baxtech_clinicModel.Bed" Width="1.5" PointX="3" PointY="1.375" Height="1.9210009765624996" />
+        <EntityTypeShape EntityType="baxtech_clinicModel.BedType" Width="1.5" PointX="0.75" PointY="1.625" Height="1.4279589843749996" />
+        <EntityTypeShape EntityType="baxtech_clinicModel.Doctor" Width="1.5" PointX="3" PointY="4.875" Height="1.7566536458333317" />
+        <EntityTypeShape EntityType="baxtech_clinicModel.Patient" Width="1.5" PointX="3" PointY="7.375" Height="2.2496956380208317" />
+        <EntityTypeShape EntityType="baxtech_clinicModel.Visit" Width="1.5" PointX="5.25" PointY="1" Height="2.7427376302083317" />
+        <EntityTypeShape EntityType="baxtech_clinicModel.VisitDetail" Width="1.5" PointX="3" PointY="10.375" Height="1.7566536458333317" />
+        <AssociationConnector Association="baxtech_clinicModel.FK_Bed_BedType" >
+          <ConnectorPoint PointX="2.25" PointY="2.3389794921875" />
+          <ConnectorPoint PointX="3" PointY="2.3389794921875" />
+        </AssociationConnector>
+        <AssociationConnector Association="baxtech_clinicModel.FK_Visit_Bed" >
+          <ConnectorPoint PointX="4.5" PointY="2.33550048828125" />
+          <ConnectorPoint PointX="5.25" PointY="2.33550048828125" />
+        </AssociationConnector>
+        <AssociationConnector Association="baxtech_clinicModel.FK_Visit_Doctor" >
+          <ConnectorPoint PointX="4.5" PointY="5.7533268229166659" />
+          <ConnectorPoint PointX="5.5104141666666671" PointY="5.753326822916665" />
+          <ConnectorPoint PointX="5.6770808333333331" PointY="5.7533268229166659" />
+          <ConnectorPoint PointX="6" PointY="5.7533268229166659" />
+          <ConnectorPoint PointX="6" PointY="3.7427376302083317" />
+        </AssociationConnector>
+        <AssociationConnector Association="baxtech_clinicModel.FK_Visit_Patient" >
+          <ConnectorPoint PointX="4.5" PointY="8.4998478190104159" />
+          <ConnectorPoint PointX="5.5937475" PointY="8.4998478190104159" />
+          <ConnectorPoint PointX="5.5937475" PointY="3.7427376302083317" />
+        </AssociationConnector>
+        <AssociationConnector Association="baxtech_clinicModel.FK_Visit_VisitDetails" >
+          <ConnectorPoint PointX="4.5" PointY="11.253326822916666" />
+          <ConnectorPoint PointX="6.4062525" PointY="11.253326822916666" />
+          <ConnectorPoint PointX="6.4062525" PointY="3.7427376302083317" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

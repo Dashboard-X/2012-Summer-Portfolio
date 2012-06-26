@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode roles="*" url="" title="Root" description="I prefer to have a flat base level">
+      
+      <siteMapNode roles="*" url="~/Home.aspx" title="Home"  description="General information about our clinic">
+        <siteMapNode roles="*" url="~/Sitemap.aspx" title="SiteMap" description="A complete view of the site structure" />
+        <siteMapNode roles="*" url="~/Privacy.aspx" title="Privacy Policy" description="A privacy policy, please read" />
+      </siteMapNode>
+      
+      <siteMapNode roles="Clerk" url="~/User/Patients.aspx" title="Patients" description="View a searchable listing of patients">
+        <siteMapNode roles="Clerk" url="~/User/RegisterPatient.aspx" title="Register a New Patient" description="Register a patient that has not previously visited"/>
+      </siteMapNode>
+      
+      <siteMapNode roles="Clerk" url="~/User/Doctors.aspx" title="Doctors" description="View a listing of all doctors" />
+      
+      <siteMapNode roles="Clerk" url="~/User/Visits.aspx" title="Visits" description="View and search all visits from patients">
+        <siteMapNode roles="Clerk" url="~/User/VisitDetails.aspx" title="Visit Details" description="View medical information relating to a visit, use the preceding page to select a record." />
+      </siteMapNode>
+
+      <siteMapNode roles="Admin" url="~/Admin/DoctorPatientInfo.aspx" title="Doctor Patient Info" description="Allows for viewing on-going and previous treatments for doctors as well as admission of new patients" />
+      </siteMapNode>
+</siteMap>

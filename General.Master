@@ -1,0 +1,33 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="General.master.cs" Inherits="Assignment2.General" %>
+<%@ Register Src="~/UserControl/NavBar.ascx" TagPrefix="bax" TagName="NavBar" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Clinic Management System (CMS)</title>
+    
+    <script type="text/javascript" src="<%# ResolveUrl("~/js/jquery-1.7.1.min.js") %>"></script>
+    <script type="text/javascript" src="<%# ResolveUrl("~/js/jquery-ui-1.8.17.custom.min.js") %>"></script>
+    <asp:ContentPlaceHolder ID="HeadHolder" runat="server">
+        
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server" id="RequiredFormWrapper">
+    <div id="PageBox">
+    <div id="CommonControlsBar">
+        <asp:Image runat="server" ID="LogoImage" SkinID="Banner" />
+        <bax:NavBar runat="server" />
+        <asp:LoginStatus ID="AspLoginStatus" runat="server" />
+    </div>
+    <div runat="server" ID="PageContent">
+        <asp:ContentPlaceHolder ID="ContentHolder" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    <p runat="server" ID="ErrorDescription" visible="false">
+    </p>
+    </form>
+</body>
+</html>

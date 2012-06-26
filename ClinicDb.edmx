@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="baxtech_clinicModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="baxtech_clinicModelStoreContainer" />
+        <Function Name="ActiveTreatmentsByDoctor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DoctorID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddPatient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Address" Type="varchar" Mode="In" />
+          <Parameter Name="DateOfBirth" Type="date" Mode="In" />
+          <Parameter Name="Phone" Type="varchar" Mode="In" />
+          <Parameter Name="EmergencyContact" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CountDoctorVisits" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DoctorId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DischargeVisit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VisitID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FindVisit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VisitId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FreeBeds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetDoctors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetInPatients" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetOutPatients" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetPatients" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="NewInPatient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PatientId" Type="int" Mode="In" />
+          <Parameter Name="DoctorId" Type="int" Mode="In" />
+          <Parameter Name="BedId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="NewOutPatient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PatientId" Type="int" Mode="In" />
+          <Parameter Name="DoctorId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="OccupiedBeds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PastVisitsToDoctor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DoctorID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RecordVisitDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VisitId" Type="int" Mode="In" />
+          <Parameter Name="Symptoms" Type="varchar" Mode="In" />
+          <Parameter Name="Disease" Type="varchar" Mode="In" />
+          <Parameter Name="Treatment" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VisitDetailsForVisit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VisitId" Type="int" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="baxtech_clinicModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="baxtech_clinicEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="GetInPatients" ReturnType="Collection(baxtech_clinicModel.GetInPatients_Result)" />
+          <FunctionImport Name="GetOutPatients" ReturnType="Collection(baxtech_clinicModel.GetOutPatients_Result)" />
+          <FunctionImport Name="FindVisit" ReturnType="Collection(Int32)">
+          <Parameter Name="VisitId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VisitDetailsForVisit" ReturnType="Collection(baxtech_clinicModel.VisitDetailsForVisit_Result)">
+          <Parameter Name="VisitId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RecordVisitDetails">
+            <Parameter Name="VisitId" Mode="In" Type="Int32" />
+            <Parameter Name="Symptoms" Mode="In" Type="String" />
+            <Parameter Name="Disease" Mode="In" Type="String" />
+            <Parameter Name="Treatment" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetPatients" ReturnType="Collection(baxtech_clinicModel.GetPatients_Result)" />
+          <FunctionImport Name="AddPatient">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="DateOfBirth" Mode="In" Type="DateTime" />
+            <Parameter Name="Phone" Mode="In" Type="String" />
+            <Parameter Name="EmergencyContact" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ActiveTreatmentsByDoctor" ReturnType="Collection(baxtech_clinicModel.GetInPatients_Result)">
+          <Parameter Name="DoctorID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PastVisitsToDoctor" ReturnType="Collection(baxtech_clinicModel.GetOutPatients_Result)">
+          <Parameter Name="DoctorID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="NewOutPatient">
+            <Parameter Name="PatientId" Mode="In" Type="Int32" />
+            <Parameter Name="DoctorId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="NewInPatient">
+            <Parameter Name="PatientId" Mode="In" Type="Int32" />
+            <Parameter Name="DoctorId" Mode="In" Type="Int32" />
+            <Parameter Name="BedId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DischargeVisit">
+          <Parameter Name="VisitID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetDoctors" ReturnType="Collection(baxtech_clinicModel.GetDoctors_Result)" />
+          <FunctionImport Name="FreeBeds" ReturnType="Collection(baxtech_clinicModel.Beds_Result)" />
+          <FunctionImport Name="OccupiedBeds" ReturnType="Collection(baxtech_clinicModel.OccupiedBeds_Result)" />
+        </EntityContainer>
+        <ComplexType Name="GetInPatients_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="DoctorId" Nullable="false" />
+          <Property Type="Int32" Name="PatientId" Nullable="false" />
+          <Property Type="Int32" Name="BedId" Nullable="true" />
+          <Property Type="Int32" Name="DetailsId" Nullable="true" />
+          <Property Type="String" Name="PatientName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DoctorName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="DateOfVisit" Nullable="false" Precision="23" />
+          <Property Type="String" Name="BedName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetOutPatients_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="DoctorId" Nullable="false" />
+          <Property Type="DateTime" Name="DateOfVisit" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateOfDischarge" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PatientName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DoctorName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="BedName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DetailsId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="VisitDetailsForVisit_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Symptoms" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="Disease" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="Treatment" Nullable="false" MaxLength="1000" />
+        </ComplexType>
+        <ComplexType Name="GetPatients_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="DateOfBirth" Nullable="false" />
+          <Property Type="String" Name="Phone" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="EmergencyContact" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="DateOfRegistration" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetDoctors_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Phone" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="PatientsInCare" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Beds_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BedName" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="RatePerDay" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="OccupiedBeds_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="BedName" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="RatePerDay" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="PatientId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="baxtech_clinicModelStoreContainer" CdmEntityContainer="baxtech_clinicEntities">
+          <FunctionImportMapping FunctionImportName="GetInPatients" FunctionName="baxtech_clinicModel.Store.GetInPatients">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="baxtech_clinicModel.GetInPatients_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="BedId" ColumnName="BedId" />
+                <ScalarProperty Name="DetailsId" ColumnName="DetailsId" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="DateOfVisit" ColumnName="DateOfVisit" />
+                <ScalarProperty Name="BedName" ColumnName="BedName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOutPatients" FunctionName="baxtech_clinicModel.Store.GetOutPatients">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="baxtech_clinicModel.GetOutPatients_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="DateOfVisit" ColumnName="DateOfVisit" />
+                <ScalarProperty Name="DateOfDischarge" ColumnName="DateOfDischarge" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="BedName" ColumnName="BedName" />
+                <ScalarProperty Name="DetailsId" ColumnName="DetailsId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FindVisit" FunctionName="baxtech_clinicModel.Store.FindVisit" />
+          <FunctionImportMapping FunctionImportName="VisitDetailsForVisit" FunctionName="baxtech_clinicModel.Store.VisitDetailsForVisit">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="baxtech_clinicModel.VisitDetailsForVisit_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Symptoms" ColumnName="Symptoms" />
+                <ScalarProperty Name="Disease" ColumnName="Disease" />
+                <ScalarProperty Name="Treatment" ColumnName="Treatment" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RecordVisitDetails" FunctionName="baxtech_clinicModel.Store.RecordVisitDetails" />
+          <FunctionImportMapping FunctionImportName="GetPatients" FunctionName="baxtech_clinicModel.Store.GetPatients">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="baxtech_clinicModel.GetPatients_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="EmergencyContact" ColumnName="EmergencyContact" />
+                <ScalarProperty Name="DateOfRegistration" ColumnName="DateOfRegistration" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddPatient" FunctionName="baxtech_clinicModel.Store.AddPatient" />
+          <FunctionImportMapping FunctionImportName="ActiveTreatmentsByDoctor" FunctionName="baxtech_clinicModel.Store.ActiveTreatmentsByDoctor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="baxtech_clinicModel.GetInPatients_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="BedId" ColumnName="BedId" />
+                <ScalarProperty Name="DetailsId" ColumnName="DetailsId" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="DateOfVisit" ColumnName="DateOfVisit" />
+                <ScalarProperty Name="BedName" ColumnName="BedName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PastVisitsToDoctor" FunctionName="baxtech_clinicModel.Store.PastVisitsToDoctor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="baxtech_clinicModel.GetOutPatients_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="DateOfVisit" ColumnName="DateOfVisit" />
+                <ScalarProperty Name="DateOfDischarge" ColumnName="DateOfDischarge" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="BedName" ColumnName="BedName" />
+                <ScalarProperty Name="DetailsId" ColumnName="DetailsId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="NewOutPatient" FunctionName="baxtech_clinicModel.Store.NewOutPatient" />
+          <FunctionImportMapping FunctionImportName="NewInPatient" FunctionName="baxtech_clinicModel.Store.NewInPatient" />
+          <FunctionImportMapping FunctionImportName="DischargeVisit" FunctionName="baxtech_clinicModel.Store.DischargeVisit" />
+          <FunctionImportMapping FunctionImportName="GetDoctors" FunctionName="baxtech_clinicModel.Store.GetDoctors">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="baxtech_clinicModel.GetDoctors_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="PatientsInCare" ColumnName="PatientsInCare" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FreeBeds" FunctionName="baxtech_clinicModel.Store.FreeBeds">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="baxtech_clinicModel.Beds_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BedName" ColumnName="BedName" />
+                <ScalarProperty Name="RatePerDay" ColumnName="RatePerDay" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="OccupiedBeds" FunctionName="baxtech_clinicModel.Store.OccupiedBeds">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="baxtech_clinicModel.OccupiedBeds_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BedName" ColumnName="BedName" />
+                <ScalarProperty Name="RatePerDay" ColumnName="RatePerDay" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="ClinicDb" ZoomLevel="47">
+        </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
